@@ -1,0 +1,165 @@
+package test;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class Solution {
+    private int capacity;
+    private int len;
+
+    private Map<Integer,LRUNode> cache;
+
+    LRUNode head;
+
+    LRUNode tail;
+
+    public Solution(int capacity)
+    {
+        this.capacity = capacity;
+        this.cache = new HashMap<>();
+        this.len = 0;
+    }
+
+    public void swap(LRUNode node)
+    {
+        if(this.tail == node) return;
+        else if(this.head == node)
+        {
+            LRUNode temp = node;
+            this.head = this.head.next;
+            this.head.prev = null;
+            temp.prev = this.tail;
+            temp.next = null;
+            this.tail.next = temp;
+            this.tail = this.tail.next;
+        }
+        else
+        {
+            LRUNode temp = node;
+            LRUNode prev = temp.prev;
+            LRUNode next = temp.next;
+
+            prev.next = next;
+            next.prev = prev;
+
+            temp.prev = tail;
+            temp.next = null;
+            this.tail.next = temp;
+            this.tail = this.tail.next;
+        }
+    }
+
+    public int get(int key)
+    {
+        if(cache.containsKey(key))
+        {
+            swap(cache.get(key));
+            return this.tail.value;
+        }
+        return -1;
+    }
+
+    public void remove()
+    {
+        cache.remove(this.head.key);
+        this.head = this.head.next;
+        if(this.head == null)
+        {
+            this.tail = null;
+        }
+        else
+        {
+            this.head.prev = null;
+        }
+    }
+
+    public void set(int key,int value)
+    {
+        if(cache.containsKey(key))
+        {
+            LRUNode current = cache.get(key);
+            current.value = value;
+            swap(current);
+        }
+        else
+        {
+            if(this.len < this.capacity)
+            {
+                LRUNode current = new LRUNode(key,value);
+                cache.put(key,current);
+                if(this.head == null)
+                {
+                    this.head = current;
+                    this.tail =current;
+                }
+                else
+                {
+                    current.prev = this.tail;
+                    this.tail.next = current;
+                    this.tail = current;
+                }
+                this.len++;
+            }
+            else
+            {
+                remove();
+                LRUNode current = new LRUNode(key,value);
+                cache.put(key,current);
+                if(this.head == null)
+                {
+                    this.head = current;
+                    this.tail = current;
+                }
+                else
+                {
+                    current.prev = this.tail;
+                    this.tail.next = current;
+                    this.tail = current;
+                }
+            }
+        }
+    }
+
+
+    public static void main(String[] args) {
+        //6 2 S 2 1 S 1 1 S 2 3 S 4 1 G 1 G 2
+
+        Solution s = new Solution(2);
+        s.set(2,1);
+        s.set(1,1);
+        s.set(2,3);
+        s.set(4,1);
+        System.out.println(s.get(1));
+        System.out.println(s.get(2));
+
+
+    }
+}
+
+class LRUNode
+{
+    int key,value;
+    LRUNode next;
+    LRUNode prev;
+
+    public LRUNode(int key,int value)
+    {
+        this.key = key;
+        this.value = value;
+    }
+
+    @Override
+    public String toString()
+    {
+        LRUNode temp = this;
+        String k = "";
+        while(temp != null)
+        {
+            k = k +temp.key+"-"+temp.value +"\t" ;
+            temp = temp.next;
+        }
+        return k;
+    }
+
+
+}
