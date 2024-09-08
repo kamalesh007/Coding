@@ -1,5 +1,7 @@
 package scaler.linkedlist;
 
+import java.util.List;
+
 public class NodeUtils {
 
     public static Node getListFromArr(int[] arr)
@@ -15,5 +17,18 @@ public class NodeUtils {
         }
         return head;
 
+    }
+
+    public static Node getMid(Node head)
+    {
+        Node slow = head;
+        Node fast = head;
+
+        while(fast != null && fast.next != null)
+        {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        return slow;
     }
 }

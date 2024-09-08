@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-class Node
+public class Node
 {
-    int data;
-    Node next;
+    public int data;
+    public Node next;
 
     public Node(int data)
     {
