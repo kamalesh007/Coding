@@ -4,6 +4,7 @@ import java.util.Stack;
 
 public class IterativePostOrder {
     public static void main(String[] args) {
+
         Stack<Node> recursionStack = new Stack<>();
 
         Node root = new Node(1);
