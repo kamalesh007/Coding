@@ -2,33 +2,33 @@ package scaler.Tree;
 
 public class FlattenInOrder {
 
-    public Pair flatten(Node root)
+    public PairFlatten flatten(Node root)
     {
-        if(root == null) return new Pair(null,null);
+        if(root == null) return new PairFlatten(null,null);
 
-        Pair L = flatten(root.left);
-        Pair R = flatten(root.right);
+        PairFlatten L = flatten(root.left);
+        PairFlatten R = flatten(root.right);
 
         root.left = null;
 
-        if(L.head == null && R.head == null) return new Pair(root,root);
+        if(L.head == null && R.head == null) return new PairFlatten(root,root);
         else if(L.head == null && R.head != null)
         {
             root.right = R.head;
-            return new Pair(root,R.tail);
+            return new PairFlatten(root,R.tail);
         }
         else if(R.head == null && L.head != null)
         {
             L.tail.left = null;
             L.tail.right = root;
-            return new Pair(L.head,root);
+            return new PairFlatten(L.head,root);
         }
         else
         {
             L.tail.left = null;
             L.tail.right = root;
             root.right = R.head;
-            return new Pair(L.head,R.tail);
+            return new PairFlatten(L.head,R.tail);
         }
     }
 
@@ -49,18 +49,18 @@ public class FlattenInOrder {
 //        root.right = new Node(9);
 //        root.right.right = new Node(10);
 
-        Pair p =new FlattenInOrder().flatten(root);
+        PairFlatten p =new FlattenInOrder().flatten(root);
         p = p;
     }
 
 }
 
-class Pair
+class PairFlatten
 {
     public Node head;
     public Node tail;
 
-    Pair(Node left,Node right)
+    PairFlatten(Node left, Node right)
     {
         this.head = left;
         this.tail = right;
