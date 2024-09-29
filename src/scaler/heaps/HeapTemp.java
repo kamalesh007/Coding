@@ -1,6 +1,6 @@
 package scaler.heaps;
 
-public class Heap {
+public class HeapTemp {
 
     public int[] buildHeap(int[] arr)
     {
@@ -43,12 +43,12 @@ public class Heap {
         return arr;
     }
 
-    
+
 
     public static void main(String[] args) {
-        Heap heap = new Heap();
+        HeapTemp heapTemp = new HeapTemp();
         int[] arr = new int[]{7,3,5,1,5,6,8,2,4};
-        heap.buildHeap(arr);
+        heapTemp.buildHeap(arr);
         for (int ar : arr)
         {
             System.out.println(ar);
